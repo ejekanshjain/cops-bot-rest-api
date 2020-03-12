@@ -8,55 +8,77 @@ const { Complaint } = require('../models')
 const usersRef = firebaseDB.child('Registered_Users')
 
 router.get('/', async (req, res) => {
-    let complaints
-    if (req.query.user) {
-        complaints = await Complaint.find({ uid: req.query.user })
+    if (req.query.firebase) {
+        const snap = await firebaseDB.once('value')
+        const allData = snap.val()
+        const complaints = []
+        Object.keys(allData).forEach((key, index) => {
+            if (allData[key].Complaints) {
+                const complaint = {
+                    _id: key,
+                    name: allData[key].Complaints.name,
+                    age: allData[key].Complaints.age,
+                    gender: allData[key].Complaints.gender,
+                    complaint: allData[key].Complaints.complaint,
+                    ilat: allData[key].Complaints.ilat,
+                    ilng: allData[key].Complaints.ilng,
+                    status: allData[key].Complaints.status,
+                    timeStamp: allData[key].Complaints.timeStamp
+                }
+                complaints.push(complaint)
+            }
+        })
+        res.json({ status: 200, message: 'List of complaints', complaints, count: complaints.length })
     } else {
-        complaints = await Complaint.find()
+        let complaints
+        if (req.query.user) {
+            complaints = await Complaint.find({ uid: req.query.user })
+        } else {
+            complaints = await Complaint.find()
+        }
+        res.json({ status: 200, message: 'List of closed complaints', complaints, count: complaints.length })
     }
-    res.json({ status: 200, message: 'List of closed complaints', complaints, count: complaints.length })
-    // const snap = await usersRef.once('value')
-    // const originalUsers = snap.val()
-    // const keys = Object.keys(originalUsers).map((key, index) => key)
-    // res.json({ status: 200, message: 'List of complaints', keys })
 })
 
 router.get('/:id', async (req, res) => {
-    try {
-        const complaint = await Complaint.findOne({ _id: req.params.id })
-        if (complaint) {
-            res.json({ status: 200, complaint })
+    if (req.query.firebase) {
+        const complaintsRef = firebaseDB.child(req.params.id)
+        const snap = await complaintsRef.once('value')
+        let originalComplaint = snap.val()
+        if (originalComplaint) {
+            let complaint = originalComplaint.Complaints
+            complaint = {
+                _id: req.params.id,
+                age: complaint.age,
+                complaint: complaint.complaint,
+                gender: complaint.gender,
+                ilat: complaint.ilat,
+                ilng: complaint.ilng,
+                name: complaint.name,
+                status: complaint.status,
+                timeStamp: complaint.timeStamp
+            }
+            res.json({ status: 200, id: req.params.id, complaint, originalComplaint })
         } else {
             res.json({ status: 404, message: 'Complaint not found' })
         }
-    } catch (err) {
-        if (err.message.includes('Cast to ObjectId failed for value')) {
-            res.json({ status: 404, message: 'Complaint not found' })
-        }
-        else {
-            console.log(err)
+    } else {
+        try {
+            const complaint = await Complaint.findOne({ _id: req.params.id })
+            if (complaint) {
+                res.json({ status: 200, complaint })
+            } else {
+                res.json({ status: 404, message: 'Complaint not found' })
+            }
+        } catch (err) {
+            if (err.message.includes('Cast to ObjectId failed for value')) {
+                res.json({ status: 404, message: 'Complaint not found' })
+            }
+            else {
+                console.log(err)
+            }
         }
     }
-    // const complaintsRef = firebaseDB.child(req.params.id)
-    // const snap = await complaintsRef.once('value')
-    // let originalComplaint = snap.val()
-    // if (originalComplaint) {
-    //     let complaint = originalComplaint.Complaints
-    //     complaint = {
-    //         _id: req.params.id,
-    //         age: complaint.age,
-    //         complaint: complaint.complaint,
-    //         gender: complaint.gender,
-    //         ilat: complaint.ilat,
-    //         ilng: complaint.ilng,
-    //         name: complaint.name,
-    //         status: complaint.status,
-    //         timeStamp: complaint.timeStamp
-    //     }
-    //     res.json({ status: 200, id: req.params.id, complaint, originalComplaint })
-    // } else {
-    //     res.json({ status: 404, message: 'Complaint not found' })
-    // }
 })
 
 router.checkout('/:id', async (req, res) => {
