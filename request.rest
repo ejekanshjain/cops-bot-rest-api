@@ -11,16 +11,24 @@ GET http://localhost:5000/api
 GET http://localhost:5000/api/users
 
 
+### Get all closed complaints
+GET http://localhost:5000/api/complaints
+
+
+### Get all closed complaints of a user
+GET http://localhost:5000/api/complaints?user=9zmyLUwecoN6XlcZVAfON1tSLJd2
+
+
+### Get closed complaint by id
+GET http://localhost:5000/api/complaints/5e6a2c0b06be6032f89d466f
+
+
 ### Get all complaints
 GET http://localhost:5000/api/complaints?firebase=true
 
 
-### Get all complaints of a user
-GET http://localhost:5000/api/complaints?user=9zmyLUwecoN6XlcZVAfON1tSLJd2
-
-
 ### Get complaint by id
-GET http://localhost:5000/api/complaints/5e6a2c0b06be6032f89d466f
+GET http://localhost:5000/api/complaints/9zmyLUwecoN6XlcZVAfON1tSLJd2?firebase=true
 
 
 ### Change status of complaint

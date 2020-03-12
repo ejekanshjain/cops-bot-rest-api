@@ -8,7 +8,7 @@ const { Complaint } = require('../models')
 const usersRef = firebaseDB.child('Registered_Users')
 
 router.get('/', async (req, res) => {
-    if (req.query.firebase) {
+    if (req.query.firebase == 'true') {
         const snap = await firebaseDB.once('value')
         const allData = snap.val()
         const complaints = []
@@ -41,7 +41,7 @@ router.get('/', async (req, res) => {
 })
 
 router.get('/:id', async (req, res) => {
-    if (req.query.firebase) {
+    if (req.query.firebase == 'true') {
         const complaintsRef = firebaseDB.child(req.params.id)
         const snap = await complaintsRef.once('value')
         let originalComplaint = snap.val()
@@ -58,7 +58,7 @@ router.get('/:id', async (req, res) => {
                 status: complaint.status,
                 timeStamp: complaint.timeStamp
             }
-            res.json({ status: 200, id: req.params.id, complaint, originalComplaint })
+            res.json({ status: 200, id: req.params.id, complaint })
         } else {
             res.json({ status: 404, message: 'Complaint not found' })
         }
