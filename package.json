@@ -1,0 +1,30 @@
+{
+  "name": "cops-bot-rest-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ejekanshjain/cops-bot-rest-api.git"
+  },
+  "keywords": [],
+  "author": "Ekansh Jain",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ejekanshjain/cops-bot-rest-api/issues"
+  },
+  "homepage": "https://github.com/ejekanshjain/cops-bot-rest-api#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.2"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "mongoose": "^5.9.4"
+  }
+}
