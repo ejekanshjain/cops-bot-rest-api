@@ -1,1 +1,27 @@
 GET http://localhost:5000
+
+
+### Check server status
+
+
+GET http://localhost:5000/api
+
+
+### Get all registered users
+GET http://localhost:5000/api/users
+
+
+### Get all complaints
+GET http://localhost:5000/api/complaints
+
+
+### Get all complaints of a user
+GET http://localhost:5000/api/complaints?user=9zmyLUwecoN6XlcZVAfON1tSLJd2
+
+
+### Get complaint by id
+GET http://localhost:5000/api/complaints/5e6a2c0b06be6032f89d466f
+
+
+### Change status of complaint
+CHECKOUT http://localhost:5000/api/complaints/h3l1wsoCgzN5l2ksBCFP322zGc03
