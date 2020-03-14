@@ -39,6 +39,9 @@ router.get('/', async (req, res) => {
         let tempOldComplaints = numberOfOldComplaints
         numberOfOldComplaints = numberOfNewComplaints
         res.json({ status: 200, message: 'List of complaints', complaints, count: complaints.length, newComplaintsCount: numberOfNewComplaints - tempOldComplaints })
+    } else if (req.query.notify == 'true') {
+        numberOfNewComplaints++
+        res.json({ status: 200, numberOfOldComplaints, numberOfNewComplaints })
     } else {
         let complaints
         if (req.query.user) {
@@ -147,11 +150,6 @@ router.checkout('/:id', async (req, res) => {
     } else {
         res.status(404).json({ status: 404, message: 'Complaint not found' })
     }
-})
-
-router.notify('/', (req, res) => {
-    numberOfNewComplaints++
-    res.json({ status: 200, numberOfOldComplaints, numberOfNewComplaints })
 })
 
 module.exports = router
