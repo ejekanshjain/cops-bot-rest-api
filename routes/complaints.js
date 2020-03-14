@@ -10,6 +10,11 @@ const usersRef = firebaseDB.child('Registered_Users')
 let numberOfOldComplaints = 0
 let numberOfNewComplaints = 0
 
+setInterval(() => {
+    numberOfOldComplaints = 0
+    numberOfNewComplaints = 0
+}, (1000 * 60 * 60 * 24));
+
 router.get('/', async (req, res) => {
     if (req.query.firebase == 'true') {
         const snap = await firebaseDB.once('value')
@@ -75,10 +80,10 @@ router.get('/:id', async (req, res) => {
                 }
                 res.json({ status: 200, id: req.params.id, complaint })
             } else {
-                res.json({ status: 404, message: 'Complaint not found' })
+                res.status(404).json({ status: 404, message: 'Complaint not found' })
             }
         } else {
-            res.json({ status: 404, message: 'Complaint not found' })
+            res.status(404).json({ status: 404, message: 'Complaint not found' })
         }
     } else {
         try {
@@ -86,14 +91,15 @@ router.get('/:id', async (req, res) => {
             if (complaint) {
                 res.json({ status: 200, complaint })
             } else {
-                res.json({ status: 404, message: 'Complaint not found' })
+                res.status(404).json({ status: 404, message: 'Complaint not found' })
             }
         } catch (err) {
             if (err.message.includes('Cast to ObjectId failed for value')) {
-                res.json({ status: 404, message: 'Complaint not found' })
+                res.status(404).json({ status: 404, message: 'Complaint not found' })
             }
             else {
                 console.log(err)
+                res.status(500).json({ status: 500, message: 'Internal Server Error' })
             }
         }
     }
@@ -136,10 +142,10 @@ router.checkout('/:id', async (req, res) => {
             complaintsRef.remove()
             res.json({ status: 200, complaint, statusBefore: 1 })
         } else {
-            res.json({ status: 500, message: 'Internal Server Error' })
+            res.status(500).json({ status: 500, message: 'Internal Server Error' })
         }
     } else {
-        res.json({ status: 404, message: 'Complaint not found' })
+        res.status(404).json({ status: 404, message: 'Complaint not found' })
     }
 })
 
