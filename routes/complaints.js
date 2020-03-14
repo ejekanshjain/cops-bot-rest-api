@@ -51,6 +51,8 @@ router.get('/:id', async (req, res) => {
             const userData = originalUsers[req.params.id]
             let complaint = originalComplaint.Complaints
             if (userData) {
+                const splitDateTime = complaint.timeStamp.split('_')
+                console.log(splitDateTime)
                 complaint = {
                     _id: req.params.id,
                     name: complaint.name,
@@ -62,6 +64,8 @@ router.get('/:id', async (req, res) => {
                     ilat: complaint.ilat,
                     ilng: complaint.ilng,
                     status: complaint.status,
+                    dateOfIncident: splitDateTime[0],
+                    timeOfIncident: splitDateTime[1],
                     timeStamp: complaint.timeStamp
                 }
                 res.json({ status: 200, id: req.params.id, complaint })
