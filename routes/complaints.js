@@ -46,19 +46,28 @@ router.get('/:id', async (req, res) => {
         const snap = await complaintsRef.once('value')
         let originalComplaint = snap.val()
         if (originalComplaint) {
+            const snap = await usersRef.once('value')
+            const originalUsers = snap.val()
+            const userData = originalUsers[req.params.id]
             let complaint = originalComplaint.Complaints
-            complaint = {
-                _id: req.params.id,
-                age: complaint.age,
-                complaint: complaint.complaint,
-                gender: complaint.gender,
-                ilat: complaint.ilat,
-                ilng: complaint.ilng,
-                name: complaint.name,
-                status: complaint.status,
-                timeStamp: complaint.timeStamp
+            if (userData) {
+                complaint = {
+                    _id: req.params.id,
+                    name: complaint.name,
+                    age: complaint.age,
+                    gender: complaint.gender,
+                    complaint: complaint.complaint,
+                    IMEI: userData.IMEI,
+                    phoneNumber: userData.phoneNumber,
+                    ilat: complaint.ilat,
+                    ilng: complaint.ilng,
+                    status: complaint.status,
+                    timeStamp: complaint.timeStamp
+                }
+                res.json({ status: 200, id: req.params.id, complaint })
+            } else {
+                res.json({ status: 404, message: 'Complaint not found' })
             }
-            res.json({ status: 200, id: req.params.id, complaint })
         } else {
             res.json({ status: 404, message: 'Complaint not found' })
         }
