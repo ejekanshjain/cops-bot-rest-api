@@ -33,3 +33,10 @@ GET http://localhost:5000/api/complaints/h3l1wsoCgzN5l2ksBCFP322zGc03?firebase=t
 
 ### Change status of complaint
 CHECKOUT http://localhost:5000/api/complaints/h3l1wsoCgzN5l2ksBCFP322zGc03
+
+
+### Send Notification for new complaint
+NOTIFY http://localhost:5000/api/complaints
+
+
+###
