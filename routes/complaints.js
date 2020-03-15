@@ -156,7 +156,7 @@ router.notify('/', (req, res) => {
     res.json({ status: 200, numberOfOldComplaints, numberOfNewComplaints })
 })
 
-router.delete('/:id', (req, res) => {
+router.delete('/:id', async (req, res) => {
     const complaintsRef = firebaseDB.child(req.params.id)
     const snap = await complaintsRef.once('value')
     let originalComplaint = snap.val()
