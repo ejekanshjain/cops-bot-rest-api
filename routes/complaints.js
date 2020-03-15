@@ -3,7 +3,7 @@ const express = require('express')
 const router = express.Router()
 
 const { firebaseDB } = require('../db')
-const { Complaint } = require('../models')
+const { Complaint, FakeComplaint } = require('../models')
 
 const usersRef = firebaseDB.child('Registered_Users')
 
@@ -142,7 +142,7 @@ router.checkout('/:id', async (req, res) => {
                 timeStamp: complaint.timeStamp
             })
             complaintsRef.remove()
-            res.json({ status: 200, complaint, statusBefore: 1 })
+            res.json({ status: 200, id: req.params.id, complaint, statusBefore: 1 })
         } else {
             res.status(500).json({ status: 500, message: 'Internal Server Error' })
         }
@@ -154,6 +154,34 @@ router.checkout('/:id', async (req, res) => {
 router.notify('/', (req, res) => {
     numberOfNewComplaints++
     res.json({ status: 200, numberOfOldComplaints, numberOfNewComplaints })
+})
+
+router.delete('/:id', (req, res) => {
+    const complaintsRef = firebaseDB.child(req.params.id)
+    const snap = await complaintsRef.once('value')
+    let originalComplaint = snap.val()
+    if (originalComplaint) {
+        let complaint = originalComplaint.Complaints
+        if (complaint.status != '0') {
+            res.status(400).json({ status: 400, message: 'You can only delete complaint with status Pending (0)' })
+        } else {
+            FakeComplaint.create({
+                uid: req.params.id,
+                name: complaint.name,
+                age: complaint.age,
+                gender: complaint.gender,
+                complaint: complaint.complaint,
+                ilat: complaint.ilat,
+                ilng: complaint.ilng,
+                status: complaint.status,
+                timeStamp: complaint.timeStamp
+            })
+            complaintsRef.remove()
+            res.json({ status: 200, id: req.params.id, message: 'Complaint deleted successfully', complaint })
+        }
+    } else {
+        res.status(404).json({ status: 404, message: 'Complaint not found' })
+    }
 })
 
 module.exports = router
