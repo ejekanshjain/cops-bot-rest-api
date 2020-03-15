@@ -65,7 +65,6 @@ router.get('/:id', async (req, res) => {
             let complaint = originalComplaint.Complaints
             if (userData) {
                 const splitDateTime = complaint.timeStamp.split('_')
-                console.log(splitDateTime)
                 complaint = {
                     _id: req.params.id,
                     name: complaint.name,
@@ -150,6 +149,11 @@ router.checkout('/:id', async (req, res) => {
     } else {
         res.status(404).json({ status: 404, message: 'Complaint not found' })
     }
+})
+
+router.notify('/', (req, res) => {
+    numberOfNewComplaints++
+    res.json({ status: 200, numberOfOldComplaints, numberOfNewComplaints })
 })
 
 module.exports = router

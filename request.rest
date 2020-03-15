@@ -39,4 +39,8 @@ CHECKOUT http://localhost:5000/api/complaints/h3l1wsoCgzN5l2ksBCFP322zGc03
 NOTIFY http://localhost:5000/api/complaints
 
 
+### Send Notification for new complaint
+GET http://localhost:5000/api/complaints?notify=true
+
+
 ###
