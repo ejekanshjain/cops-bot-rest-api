@@ -36,7 +36,7 @@ CHECKOUT http://localhost:5000/api/complaints/h3l1wsoCgzN5l2ksBCFP322zGc03
 
 
 ### Delete a complaint (mark as fake)
-DELETE http://localhost:5000/api/complaints/h3l1wsoCgzN5l2ksBCFP322zGc03
+DELETE http://localhost:5000/api/complaints/DQsxMYvWhmbgEGXRnSwknxlncp43
 
 
 ### Send Notification for new complaint
@@ -45,6 +45,18 @@ NOTIFY http://localhost:5000/api/complaints
 
 ### Send Notification for new complaint
 GET http://localhost:5000/api/complaints?notify=true
+
+
+### Get all Fake Complaints or Deleted Complaints
+GET http://localhost:5000/api/complaints?fake=true
+
+
+### Get all Fake Complaints or Deleted Complaints of a user
+GET http://localhost:5000/api/complaints?fake=true&user=DQsxMYvWhmbgEGXRnSwknxlncp43
+
+
+### Get Fake Complaint by id or Deleted Complaints
+GET http://localhost:5000/api/complaints/5e6dd056508ba12ec413475e?fake=true
 
 
 ###

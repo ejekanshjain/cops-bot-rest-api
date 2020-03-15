@@ -42,6 +42,14 @@ router.get('/', async (req, res) => {
     } else if (req.query.notify == 'true') {
         numberOfNewComplaints++
         res.json({ status: 200, numberOfOldComplaints, numberOfNewComplaints })
+    } else if (req.query.fake == 'true') {
+        let complaints
+        if (req.query.user) {
+            complaints = await FakeComplaint.find({ uid: req.query.user })
+        } else {
+            complaints = await FakeComplaint.find()
+        }
+        res.json({ status: 200, message: 'List of Fake complaints', complaints, count: complaints.length })
     } else {
         let complaints
         if (req.query.user) {
@@ -86,6 +94,23 @@ router.get('/:id', async (req, res) => {
             }
         } else {
             res.status(404).json({ status: 404, message: 'Complaint not found' })
+        }
+    } else if (req.query.fake == 'true') {
+        try {
+            const complaint = await FakeComplaint.findOne({ _id: req.params.id })
+            if (complaint) {
+                res.json({ status: 200, complaint })
+            } else {
+                res.status(404).json({ status: 404, message: 'Complaint not found' })
+            }
+        } catch (err) {
+            if (err.message.includes('Cast to ObjectId failed for value')) {
+                res.status(404).json({ status: 404, message: 'Complaint not found' })
+            }
+            else {
+                console.log(err)
+                res.status(500).json({ status: 500, message: 'Internal Server Error' })
+            }
         }
     } else {
         try {
