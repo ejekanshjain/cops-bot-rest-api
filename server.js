@@ -8,7 +8,7 @@ const { mongoDB, firebaseDB } = require('./db')
 
 app.use(cors({
     "origin": "*",
-    "methods": "GET,CHECKOUT,NOTIFY",
+    "methods": "GET,CHECKOUT,DELETE,NOTIFY",
     "preflightContinue": false,
     "optionsSuccessStatus": 204
 }))
