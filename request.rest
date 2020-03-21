@@ -11,6 +11,10 @@ GET http://localhost:5000/api
 GET http://localhost:5000/api/users
 
 
+### Get all registered users that are police
+GET http://localhost:5000/api/users?police=true
+
+
 ### Get all closed complaints
 GET http://localhost:5000/api/complaints
 
