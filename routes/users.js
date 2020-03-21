@@ -2,9 +2,9 @@ const express = require('express')
 
 const router = express.Router()
 
-const { firebaseDB } = require('../db')
+const { firebaseDB1 } = require('../db')
 
-const usersRef = firebaseDB.child('Registered_Users')
+const usersRef = firebaseDB1.child('Registered_Users')
 
 router.get('/', async (req, res) => {
     const snap = await usersRef.once('value')

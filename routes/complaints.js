@@ -2,10 +2,10 @@ const express = require('express')
 
 const router = express.Router()
 
-const { firebaseDB } = require('../db')
+const { firebaseDB1 } = require('../db')
 const { Complaint, FakeComplaint } = require('../models')
 
-const usersRef = firebaseDB.child('Registered_Users')
+const usersRef = firebaseDB1.child('Registered_Users')
 
 let numberOfOldComplaints = 0
 let numberOfNewComplaints = 0
@@ -17,7 +17,7 @@ setInterval(() => {
 
 router.get('/', async (req, res) => {
     if (req.query.firebase == 'true') {
-        const snap = await firebaseDB.once('value')
+        const snap = await firebaseDB1.once('value')
         const allData = snap.val()
         const complaints = []
         Object.keys(allData).forEach((key, index) => {
@@ -63,7 +63,7 @@ router.get('/', async (req, res) => {
 
 router.get('/:id', async (req, res) => {
     if (req.query.firebase == 'true') {
-        const complaintsRef = firebaseDB.child(req.params.id)
+        const complaintsRef = firebaseDB1.child(req.params.id)
         const snap = await complaintsRef.once('value')
         let originalComplaint = snap.val()
         if (originalComplaint) {
@@ -133,7 +133,7 @@ router.get('/:id', async (req, res) => {
 })
 
 router.checkout('/:id', async (req, res) => {
-    const complaintsRef = firebaseDB.child(req.params.id)
+    const complaintsRef = firebaseDB1.child(req.params.id)
     const snap = await complaintsRef.once('value')
     let originalComplaint = snap.val()
     if (originalComplaint) {
@@ -183,7 +183,7 @@ router.notify('/', (req, res) => {
 })
 
 router.delete('/:id', async (req, res) => {
-    const complaintsRef = firebaseDB.child(req.params.id)
+    const complaintsRef = firebaseDB1.child(req.params.id)
     const snap = await complaintsRef.once('value')
     let originalComplaint = snap.val()
     if (originalComplaint) {
