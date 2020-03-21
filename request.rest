@@ -59,4 +59,14 @@ GET http://localhost:5000/api/complaints?fake=true&user=DQsxMYvWhmbgEGXRnSwknxln
 GET http://localhost:5000/api/complaints/5e6dd056508ba12ec413475e?fake=true
 
 
+### Send Whatsapp message notification for complaint
+POST http://localhost:5000/api/whatsapp
+Content-Type: application/json
+
+{
+    "phoneNumber": "9530077351",
+    "complaintId": "DQsxMYvWhmbgEGXRnSwknxlncp43"
+}
+
+
 ###

@@ -169,6 +169,7 @@ router.checkout('/:id', async (req, res) => {
             complaintsRef.remove()
             res.json({ status: 200, id: req.params.id, complaint, statusBefore: 1 })
         } else {
+            console.log(err)
             res.status(500).json({ status: 500, message: 'Internal Server Error' })
         }
     } else {
