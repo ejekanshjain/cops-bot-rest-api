@@ -15,6 +15,10 @@ GET http://localhost:5000/api/users
 GET http://localhost:5000/api/users?police=true
 
 
+### Get all registered users that are police by region
+GET http://localhost:5000/api/users?police=true&region=sukher
+
+
 ### Get all closed complaints
 GET http://localhost:5000/api/complaints
 

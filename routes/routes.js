@@ -8,6 +8,6 @@ router.get('/', (req, res) => {
 
 router.use('/users', require('./users'))
 router.use('/complaints', require('./complaints'))
-router.use('/whatsapp', require('./sendWhatsappMessage'))
+router.use('/whatsapp', require('./whatsapp'))
 
 module.exports = router
