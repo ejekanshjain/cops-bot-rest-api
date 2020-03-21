@@ -15,7 +15,6 @@ router.post('/', async (req, res) => {
     if (req.body.phoneNumber) req.body.phoneNumber = parseInt(req.body.phoneNumber)
     const { phoneNumber, complaintId } = req.body
     if (phoneNumber == '' || phoneNumber == null) return res.status(400).json({ status: 400, message: `'phoneNumber' is required` })
-    if (phoneNumber < 1000000000 && phoneNumber > 9999999999) return res.status(400).json({ status: 400, message: `'phoneNumber' should be a 10 digit number` })
     if (complaintId == '' || complaintId == null) return res.status(400).json({ status: 400, message: `'complaintId' is required` })
     let complaint
     try {
