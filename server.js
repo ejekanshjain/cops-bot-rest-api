@@ -1,4 +1,6 @@
-require('dotenv').config()
+if (process.env.NODE_ENV != 'production') {
+    require('dotenv').config()
+}
 const express = require('express')
 const cors = require('cors')
 
@@ -7,7 +9,7 @@ const port = process.env.PORT || 3000
 
 app.use(cors({
     "origin": "*",
-    "methods": "GET,CHECKOUT,DELETE,NOTIFY",
+    "methods": "GET,POST,CHECKOUT,DELETE,NOTIFY",
     "preflightContinue": false,
     "optionsSuccessStatus": 204
 }))
@@ -19,4 +21,4 @@ app.get('/', (req, res) => {
 
 app.use('/api', require('./routes'))
 
-app.listen(port, () => console.log(`Server started on port ${port}...`))
+app.listen(port, () => console.log(`${process.env.NODE_ENV != 'production' ? 'Development' : 'Production'} server started on port ${port}...`))
