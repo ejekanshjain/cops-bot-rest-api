@@ -4,6 +4,7 @@ const router = express.Router()
 
 const { firebaseDB1 } = require('../db')
 const { Complaint, FakeComplaint } = require('../models')
+const { getRegion } = require('../utilities')
 
 const usersRef = firebaseDB1.child('Registered_Users')
 
@@ -73,6 +74,7 @@ router.get('/:id', async (req, res) => {
             let complaint = originalComplaint.Complaints
             if (userData) {
                 const splitDateTime = complaint.timeStamp.split('_')
+                const region = getRegion(complaint.ilat, complaint.ilng)
                 complaint = {
                     _id: req.params.id,
                     name: complaint.name,
@@ -83,6 +85,7 @@ router.get('/:id', async (req, res) => {
                     phoneNumber: userData.phoneNumber,
                     ilat: complaint.ilat,
                     ilng: complaint.ilng,
+                    region,
                     status: complaint.status,
                     dateOfIncident: splitDateTime[0],
                     timeOfIncident: splitDateTime[1],
