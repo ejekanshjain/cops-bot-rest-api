@@ -112,7 +112,7 @@ router.get('/:id', async (req, res) => {
             }
             else {
                 console.log(err)
-                res.status(500).json({ status: 500, message: 'Internal Server Error' })
+                return res.status(500).json({ status: 500, message: 'Internal Server Error' })
             }
         }
     } else {
@@ -129,7 +129,7 @@ router.get('/:id', async (req, res) => {
             }
             else {
                 console.log(err)
-                res.status(500).json({ status: 500, message: 'Internal Server Error' })
+                return res.status(500).json({ status: 500, message: 'Internal Server Error' })
             }
         }
     }

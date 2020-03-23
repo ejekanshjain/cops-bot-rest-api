@@ -1,3 +1,4 @@
 module.exports = {
-    getRegion: require('./getRegion')
+    getRegion: require('./getRegion'),
+    regions: require('./regions')
 }

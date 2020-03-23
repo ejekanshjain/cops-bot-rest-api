@@ -65,7 +65,7 @@ const regions = [
         longitude: 73.74631
     },
     {
-        station: 'BHUPAL PURA',
+        station: 'BHUPALPURA',
         latitude: 24.587802,
         longitude: 73.701411
     }

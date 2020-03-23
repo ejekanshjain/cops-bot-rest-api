@@ -72,8 +72,8 @@ POST http://localhost:5000/api/whatsapp
 Content-Type: application/json
 
 {
-    "phoneNumber": "9530077351",
-    "complaintId": "DQsxMYvWhmbgEGXRnSwknxlncp43"
+    "complaintId": "DQsxMYvWhmbgEGXRnSwknxlncp43",
+    "region": "NEARBY"
 }
 
 

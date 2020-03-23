@@ -29,7 +29,7 @@ router.get('/', async (req, res) => {
                 })
             })
             const count = users.length
-            res.json({ status: 200, message: 'List of registered users', users, count })
+            res.json({ status: 200, message: 'List of Users', users, count })
         } else {
             const users = []
             const snap = await policeRef.once('value')
